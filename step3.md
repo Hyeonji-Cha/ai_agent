@@ -14,11 +14,13 @@
     - 서비싀 핵심 자산 관리해야함
 
 # 구조
+```
 /
 L app/
     L prompts.py  : 프럼프트 구성, 퓨샷
 L stpes/
     L step3_prompt_engineering.py : 프럼프트 엔지니어링 기술 적용하여 LLM 질의
+```
 
 # 실행
 ```
