@@ -12,7 +12,15 @@ def answer(query: str) -> str:
 
     # 2. 검색 결과를 LLM에 프럼프트에 적용할수 있게 구조 조정
     evidence = '\n\n'.join(f"[{code}] {content}" for code,_,_,_,content,_ in results)
-    print( evidence )
+    # print( evidence )
+
+    # 3. prompt 구성
+    #    검색된 근거 밖의 내용으로는 답변을 만들지 않도록 제약조건, 규칙등 부여
+    prompt = ChatPromptTemplate.from_messages([
+        ("system", "회사 정책 상담사입니다. 제공된 근거만 사용하고, 답변 끝에 문서 코드를 표시하세요. 근거가 부족하면 모른다고 답하세요."),  
+        ("human", "질문: {query}\n\n근거:\n{evidence}"),
+    ])
 
 
-    return ""
+    # 4. 체인 구성 -> LLM 호출 -> 응답 획득
+    return (prompt | get_chat_model()).invoke({"query":query, "evidence":evidence}).content
