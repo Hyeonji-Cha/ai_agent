@@ -27,3 +27,12 @@ with connect() as conn, conn.cursor() as cur: # with문 2개 사용한것과 같
         #break
     conn.commit()
     pass
+
+# 5. 유사도 검사 (질문백터 <-> DB상에 적제된 데이터 백터간 거리를 측정)
+# 5-1. 질문의 백터화
+q = get_embeddings().embed_query('상품을 반품하고 싶어요') # cs 관련 질문
+with connect() as conn, conn.cursor() as cur:
+    cur.execute()
+    # 결과 출력
+    for result in cur.fetchall():
+        print( result )
