@@ -26,7 +26,7 @@ def vector_search(query:str, k:int=5):
                 d.category,
                 c.content,
                 1-(c.embedding <=> %s) as score
-            from document_chucks c 
+            from document_chunks c 
             join documents d
             on c.document_id=d.id
             order by (c.embedding <=> %s)
