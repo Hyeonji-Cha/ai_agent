@@ -41,11 +41,11 @@ def ingest_file( path: Path):
             (%s, %s, %s, %s, %s, %s, %s)
             on conflict(document_code)
             do update set
-                department=EXCLUDED.department
-                category=EXCLUDED.category
-                title=EXCLUDED.title
-                source=EXCLUDED.source
-                version=EXCLUDED.version
+                department=EXCLUDED.department,
+                category=EXCLUDED.category,
+                title=EXCLUDED.title,
+                source=EXCLUDED.source,
+                version=EXCLUDED.version,
                 effective_date=EXCLUDED.effective_date
             returning id
         """, (meta['document_code'],meta['department'],meta['category'],meta['title'],str(path.relative_to(ROOT)), meta.get('version'),meta.get('effective_date')))
