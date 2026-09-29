@@ -6,3 +6,26 @@
     - 문서 테이블(1) -> 청킹 테이블(n)
     - 문서 (md + 테스트형태 제공)
         - Markdown fomatter 처리(메터데이터), document chunking 처리 (임베딩처리) 
+
+# 데이터
+- cs, sales, hr 관련 사내 규정 문서
+- 현재 = 메타 데이터 + 규정 
+- 향후 규정 내용을 더 확대 예정 (청킹이 n개로 확장되는것 확인)
+
+# 구조
+```
+/
+L sql 
+    L migrations
+        L 002_documents.sql
+```
+
+# 데이터를 백터화 디비 입력 절차
+- 002_documents.sql
+
+
+
+- 테이블 생성
+```
+python -m scripts.migrate
+```
