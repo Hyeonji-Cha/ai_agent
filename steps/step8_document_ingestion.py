@@ -3,4 +3,6 @@
 - 메타데이터는 md 파일 구조로 처리하여 디비 입력
 '''
 
-from app.in
+from app.ingestion.ingest import main
+
+main()
