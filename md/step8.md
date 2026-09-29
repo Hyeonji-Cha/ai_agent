@@ -52,6 +52,12 @@ agentlab=# \dt
 # 실행
 ```
 python -m steps.step8_document_ingestion
+---
+select * from documents;
+---
+ id | document_code  | department | category |         title          |          source          | version | effective_date |          created_at           
+----+----------------+------------+----------+------------------------+--------------------------+---------+----------------+-------------------------------
+  1 | CS-REFUND-2026 | CS         | refund   | 고객 반품 및 환불 정책 | data\cs\refund_policy.md | 2026.3  | 2026-04-01     | 2026-09-29 05:17:34.311089+00
 ```
 
 # 청킹 종류
