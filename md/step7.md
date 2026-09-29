@@ -71,4 +71,28 @@ agentlab=# select * from demo_vectors;
 python -m steps.step7_pgvector
 ----
 환불 정책 [-0.06341178715229034, 0.05073736980557442, ..... ]
+
+
+```
+
+# 쿼리를 통해 데이터 확인
+```
+select id, content from demo_vectors;
+ id |    content     
+----+----------------
+  1 | 환불 정책
+  2 | 연차 휴가 규정
+  3 | 월 매출 분석
+(3 rows)
+
+select 
+    id, content, 
+    left(embedding::text, 14) || '...' as embedding
+from demo_vectors;
+-----
+ id |    content     |     embedding     
+----+----------------+-------------------
+  1 | 환불 정책      | [-0.06341179,0...
+  2 | 연차 휴가 규정 | [-0.041086007,...
+  3 | 월 매출 분석   | [-0.06644361,-...
 ```
