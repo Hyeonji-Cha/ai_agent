@@ -52,7 +52,9 @@ query = "상품 하자 환불 기간과 배송비 부담 주체"
 
 # 전체 검색
 for row in advanced_search(query, k=5):
-    print( row[0], row[1], row[-2], row[-1] )
+    print( row[0], row[1], row[2], row[3], row[-2], row[-1], row[4][:20] )
+    print( row[4] )
+    break
 
 
 # 필터를 활용 검색 -> CS만 검색등
