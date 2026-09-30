@@ -14,6 +14,9 @@
 # 정규식
 import re
 from app.embedding import get_embeddings
+import math
+# Vector 타입 힌트
+from typing import Sequence
 
 # 350글자수(설정값) 이상을 가진 문단을 재료로 쪼개기 진행
 def _splite_sentences(block: str) -> list[str]:
@@ -111,10 +114,10 @@ def _cosine_similarity(
             for value in vector_b
         )
     )
-
+    # 0인 경우 처리
     if norm_a == 0 or norm_b == 0:
         return 0.0
-
+    # 공식 = 두백터의 내적 / (a백터크기)*(b백터크기)
     return dot_product / (norm_a * norm_b)
 
 # 시멘틱 청킹 함수 
@@ -143,6 +146,7 @@ def semantic_split_text( text:str, threshold: float=0.60, min_chars:int = 300, m
         cur_vec = embeddings[ index ]
 
         # 6-2. 유사도 검사
+        similarity = _cosine_similarity( pre_vec, cur_vec)
     
     
     return []
