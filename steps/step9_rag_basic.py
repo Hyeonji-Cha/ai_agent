@@ -5,7 +5,8 @@
 from app.retrieval import vector_search
 from app.rag import answer
 
-q = '상품 자체 하자는 언제까지 환불할 수 있나요?' # 백터디비 검색 유사도로 cs 관련 정책을 가져오도로 구성(목표점)
+#q = '상품 자체 하자는 언제까지 환불할 수 있나요?' # 백터디비 검색 유사도로 cs 관련 정책을 가져오도로 구성(목표점)
+q = '입사 6개월차 신입 개발자입니다. 연차 사용 가능한가요?'
 
 # for chunk in vector_search(q, 3):
 #     print( chunk )
