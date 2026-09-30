@@ -88,6 +88,35 @@ def _semantic_units(text: str) -> list[str]:
     return units
 
 
+# 코사인 유사도 검사 함수
+def _cosine_similarity(
+    vector_a: Sequence[float],
+    vector_b: Sequence[float],
+) -> float:
+    dot_product = sum(
+        a * b
+        for a, b in zip(vector_a, vector_b)
+    )
+
+    norm_a = math.sqrt(
+        sum(
+            value * value
+            for value in vector_a
+        )
+    )
+
+    norm_b = math.sqrt(
+        sum(
+            value * value
+            for value in vector_b
+        )
+    )
+
+    if norm_a == 0 or norm_b == 0:
+        return 0.0
+
+    return dot_product / (norm_a * norm_b)
+
 # 시멘틱 청킹 함수 
 # 원문, 임계값(0.6 이하면 청킹), 최소글자수 , 최대글자수(유사도가 계속 0.6이상여도 최대 글자수가 1200 넘어가면 청킹)
 def semantic_split_text( text:str, threshold: float=0.60, min_chars:int = 300, max_chars: int = 1200) -> list[str]:
@@ -112,6 +141,8 @@ def semantic_split_text( text:str, threshold: float=0.60, min_chars:int = 300, m
         pre_vec = embeddings[ index - 1]
         # 현재백터 : 1 -> 2 -> 3
         cur_vec = embeddings[ index ]
+
+        # 6-2. 유사도 검사
     
     
     return []
