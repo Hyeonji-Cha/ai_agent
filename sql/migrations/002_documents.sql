@@ -89,7 +89,10 @@ CREATE TABLE IF NOT EXISTS document_chunks (
 
 -- ==================================
 -- 3. 문서 필터 검색용 인덱스
+--    부서, 카테고리, 적용일 기준 문서 필터 검색용 복합 인덱스
 -- ==================================
+create index if not exists idx_documents_filters
+on documents(department, category, effective_date)
 
 -- ==================================
 -- 4. chunk 메타 정보 검색용 인덱스
