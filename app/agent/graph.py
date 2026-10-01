@@ -31,16 +31,13 @@ def build_graph():
         # 2. 라운드를 기점으로 모델 선택
         #    차후, 모델을 여러 케이스로 준비(모델 id, 제품(gpt, claude, 도구등록 상이하게))
         select_model = model if rounds >=6 else bind_model # 6회 이상이면 그냥 추론, 이하면 도구를 이용한 추론
-
         # 3. 비동기 추론 호출
         response = await select_model.ainvoke(
             # 도구를 사용했다면, 첫번째가 아니라면 messages에 기록이 존재함 -> 그간 추론, 행동한 모든 내역을 같이 보냄
             [SystemMessage(content=SYSTEM_PROMPT), *state['messages']]
         )
-
         # 4. 추론결과, 라운드(LLM 1회 호출) + 1 하여 반환 -> state['messages']에 기록됨 => 상태관리
         return {"messages":[response], "rounds": rounds+1}
-
     
     # 3-1. 그래프 생성
     graph = StateGraph( AgentState )            # 상태 정보를 가진 그래프 생성
@@ -48,9 +45,16 @@ def build_graph():
     # 3-2. 노드 등록 (LLM 추론, 도구 )
     graph.add_node("agent", call_model)         # LLM Agent 노드 등록
     # handle_tool_errors : 툴 실행중에 에러 발생시 에이전트 전체를 바로 싪패시키지 않고 오류를 처리하여 agent 대응하게 할것인가?
-    graph.add_node( ToolNode(TOOLS, handle_tool_errors=True) )
+    graph.add_node("tools", ToolNode(TOOLS, handle_tool_errors=True) )
+
+    # 3-3. 흐름 구성(실행방향 지정)
+    # 시작점
+    graph.add_edge(START, "agent")              # 시작->Agent 
+    # 조건부 실행 (에이전트가 툴을 사용하겠다, 아니면 END 이동 -> 추론을 통해서 판단)
+    graph.add_conditional_edges("agent", tools_condition, {"tools":"tools", END:END})
+    # 툴 사용 이후 방향성
+    graph.add_edge("tools","agent") # 툴 사용 => 에이전트 진행
+       
     
-    
-    
-    # 3-x 그래프 컴파일및 반환
+    # 3-4 그래프 컴파일및 반환 -> 실행 가능한 형태로 구성 반환
     return graph.compile()
