@@ -26,3 +26,13 @@ L app
 L steps
     L step14_memory.py      : 메모리 테스트
 ```
+
+# sql 반영
+```
+python -m scripts.migrate
+---
+\dt
+
+# 테이블 구조 확인
+\d agent_memories
+```
